@@ -69,10 +69,19 @@ CFLAGS := $(COMMON_CFLAGS) $(FFLAGS) -std=c99 \
     -Werror=implicit-function-declaration
 
 CXXFLAGS := $(COMMON_CFLAGS) $(FFLAGS) -std=c++98 \
-    -Woverloaded-virtual -Wextra-semi -Wsuggest-override \
-    -Wzero-as-null-pointer-constant -Wnon-virtual-dtor
+    -Woverloaded-virtual -Wextra-semi -Wsuggest-override -Wnon-virtual-dtor
 
-LDFLAGS := $(FFLAGS)
+ifeq ($(CONFIG),debug)
+    LDFLAGS := -fsanitize=address,undefined -fno-sanitize-recover=all
+else
+    LDFLAGS := -fstack-protector-strong -fno-plt -Wl,-z,relro,-z,now
+endif
+
+ifeq ($(UNAME_S),Darwin)
+	SYSTEM_LIBS := -framework OpenGL -framework OpenAL -lm
+else
+	SYSTEM_LIBS := -lGL -lGLU -lopenal -lm
+endif
 
 # ------------------------------ Sources ------------------------------
 

@@ -3,45 +3,57 @@
 
 # Object files
 *.o
-*.ko
 *.obj
 *.elf
 
-# Linker output
+# Linker guff
 *.ilk
 *.map
 *.exp
 
-# Precompiled Headers
+# Precompiled Headers (who uses these)
 *.gch
 *.pch
 
-# Libraries
+# Actual build libraries
 *.lib
 *.a
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
+# Shared objects and dlls
 *.dll
 *.so
 *.so.*
 *.dylib
 
-# Executables
+# apps
 *.exe
 *.out
 *.app
-*.i*86
-*.x86_64
-*.hex
 *.bin
 
-# Debug files
+# debug
 *.dSYM/
 *.su
 *.idb
 *.pdb
 
-# debug information files
-*.dwo
+# build output
+build/
+dist/
+
+# dependencies
+external/
+
+# editors & per-user files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# compile commands
+compile_commands.json
