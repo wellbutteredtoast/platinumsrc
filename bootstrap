@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# Ensure you have CMake installed, modern OpenALSoft
+# compiling requires it.
+
+EXTERNAL=external
+mkdir -p "$EXTERNAL"
+
+echo "Fetching stb headers..."
+curl -sL "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h" \
+    -o "$EXTERNAL/stb_image.h"
+curl -sL "https://raw.githubusercontent.com/nothings/stb/master/stb_truetype.h" \
+    -o "$EXTERNAL/stb_truetype.h"
+curl -sL "https://raw.githubusercontent.com/nothings/stb/master/stb_perlin.h" \
+    -o "$EXTERNAL/stb_perlin.h"
+
+# RXI sj.json
+echo "Fetching rxi headers..."
+curl -sL "https://raw.githubusercontent.com/rxi/sj.h/master/sj.h" \
+    -o "$EXTERNAL/sj.h"
+
+# OpenAL requires CMake
+if [ ! -d "$EXTERNAL/openal-soft" ]; then
+    echo "Fetching openal-soft..."
+    git clone --depth=1 https://github.com/kcat/openal-soft.git "$EXTERNAL/openal-soft"
+else
+    echo "openal-soft already fetched, skipping..."
+fi
+
+echo "Building openal-soft..."
+cmake -S "$EXTERNAL/openal-soft" \
+      -B "$EXTERNAL/openal-soft/build" \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DLIBTYPE=STATIC \
+      -DALSOFT_EXAMPLES=OFF \
+      -DALSOFT_TESTS=OFF \
+      -DALSOFT_UTILS=OFF
+cmake --build "$EXTERNAL/openal-soft/build" --parallel
