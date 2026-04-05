@@ -1,0 +1,63 @@
+PlatinumSrc - A dead simple game engine
+(C) 2026- Sam W. & Other Contributors
+================================================================================
+
+Welcome to the repository for PlatinumSrc, a game engine and collection
+of tools built with a unique goal in mind, limits. Not what most people
+would even consider reasonable, but _actual_, miserable limits that force
+highly efficient, compact code that squeezes every possible ounce of raw
+performance.
+
+ |
+ | PlatinumSrc is designed to work on systems as dated as a Pentium 4
+ | class system, running x86 Windows XP. PlatinumSrc is expected to run
+ | on hardware around this spec:
+ | -> Windows XP x86 (x64 MIGHT work)
+ | -> Intel Pentium 4 505 ~@ 2.66GHz
+ | -> > 368MB usable RAM
+ | -> ATI Radeon 9000 series GPU (at least 64MB of vRAM) 
+ |
+
+And that's the goal. If you have a PC of similar spec and age, you should
+be able to compile the source code on that machine and even the engine
+examples, _and_ run them! Now most actual development happens on _modern_
+hardware, alongside compiling and testing but if you have physical hardware
+and it's in a usable state, you absolutely should test on it!
+
+You don't have to directly compile on the target hardware, though if you do...
+prepare for long compiling times, as those PCs are dated and aren't really
+optimized for building like this, heh.
+
+Technical Stuffs
+================================================================================
+
+PlatinumSrc is implemented in C99 with no compiler extensions. Just plain C.
+To avoid what could be problematic, a lot of _required things_ like libraries
+for math, utilities, and whatever else we need, are implemented "in-house"
+...AKA: we do it ourselves or rely on minimal dependencies. Exceptions exist, 
+like graphics, that's handled externally to avoid what would be actual years of 
+developer hell.
+
+PlatinumSrc uses OpenGL 2.1 for graphics and GLSL 110 for shaders. Basic but
+effectively universal, works anywhere, except on MacOS which is probably going
+to break in the near future.
+
+** To build on Windows **
+
+In a "Visual Studio Developer Command Prompt" - run `build.cmd`
+ >> Not powershell, classic command prompt
+
+Remember to read the top-level comments to know what you need before runing!
+
+** To build on Linux / macOS **
+
+Just use the Makefile!
+
+Legal & Misc.
+================================================================================
+
+This project is open-source software, distributed for free, forever under the
+BSD-4-Clause license. The root of this repo has the 'license' file that you can
+reference for how to use this project without breaking its clauses.
+
+Please do not steal code from pre-existing projects!
