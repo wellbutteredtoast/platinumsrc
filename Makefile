@@ -49,7 +49,7 @@ CXX := g++
 # ------------------------------ Flags ------------------------------
 
 COMMON_CFLAGS := \
-    -I$(INC_DIR) \
+    -I$(INC_DIR) -isystem $(EXT_DIR) -isystem $(EXT_DIR)/openal-soft/include \
     -Wall -Wextra -Wshadow -Wdouble-promotion -Wsign-conversion \
     -Wimplicit-fallthrough -Wcast-align -Wformat=2 -Wpointer-arith \
     -Werror=return-type -Werror=null-dereference -Werror=undef \
@@ -78,7 +78,7 @@ else
 endif
 
 ifeq ($(UNAME_S),Darwin)
-	SYSTEM_LIBS := -framework OpenGL -framework OpenAL -lm
+	SYSTEM_LIBS := -framework OpenGL -lm
 else
 	SYSTEM_LIBS := -lGL -lGLU -lopenal -lm
 endif
@@ -109,7 +109,7 @@ $(STATIC_TARGET): $(OBJS)
 
 $(SHARED_TARGET): $(OBJS)
 	@mkdir -p $(dir $@)
-	$(CXX) $(SHARED_FLAGS) -o $@ $(OBJS) $(LDFLAGS)
+	$(CXX) $(SHARED_FLAGS) -o $@ $(OBJS) $(LDFLAGS) $(SYSTEM_LIBS)
 
 # ------------------------------ Compilation ------------------------------
 
@@ -134,12 +134,11 @@ rebuild: clean all
 
 .PHONY: static
 static:
-	$(MAKE) LIB_TYPE=static
+	$(MAKE) LIB_TYPE=static CONFIG=$(CONFIG)
 
 .PHONY: shared
 shared:
-	$(MAKE) LIB_TYPE=shared
-
+	$(MAKE) LIB_TYPE=shared CONFIG=$(CONFIG)
 # ------------------------------ Help ------------------------------
 
 .PHONY: help
