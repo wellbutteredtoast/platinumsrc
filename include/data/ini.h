@@ -41,12 +41,41 @@ typedef struct {
     int sect_count;
 } ini;
 
+/**
+ * @brief Parses an INI file from path and returns an ini object with its
+ *        sections and keys/values from the file.
+ * 
+ * @param path Plaintext path to the file
+ * @param err Error reference in event ini parsing/read fails
+ * @return ini The INI object
+ */
 ini parse_ini_file(const char *path, int *err);
 
+/**
+ * @brief Get the ini section object
+ * 
+ * @param ini_file 
+ * @param sect_name 
+ * @return ini_sect 
+ */
 ini_sect get_ini_section(const ini *ini_file, const char *sect_name);
 
+/**
+ * @brief Get the key-val pair from an ini section
+ * 
+ * @param section The relevant section where the pair is stored
+ * @param key The name of the key
+ * @return ini_pair 
+ */
 ini_pair get_ini_pair(const ini_sect *section, const char *key);
 
+/**
+ * @brief Set a key and value into an ini_pair object
+ * 
+ * @param key 
+ * @param value 
+ * @return ini_pair 
+ */
 ini_pair set_ini_pair(const char *key, const char *value);
 
 #endif
