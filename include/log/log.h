@@ -3,6 +3,16 @@
 //          This solution only relies on the C standard library!
 //          This is also self contained, since it's very minimal.
 //
+//          You can optionally override these two macros:
+//              > LOG_LEVEL
+//              > LOG_FILE
+//
+//          By defining them BEFORE you include this header.
+//          Example:
+//              #define LOG_LEVEL LOG_INFO
+//              #define LOG_FILE fopen("latest.log", "a")
+//              #include "log/log.h"
+//
 
 #ifndef _LOG_H
 #define _LOG_H
