@@ -19,6 +19,7 @@ BUILD_DIR   := build
 SRC_DIR     := src
 EXT_DIR     := external
 INC_DIR     := include
+MTAR_DIR	:= $(EXT_DIR)/mtar
 
 # ------------------------------ Platform ------------------------------
 
@@ -50,6 +51,7 @@ CXX := g++
 
 COMMON_CFLAGS := \
     -I$(INC_DIR) -isystem $(EXT_DIR) -isystem $(EXT_DIR)/openal-soft/include \
+	-isystem $(EXT_DIR)/mtar \
     -Wall -Wextra -Wshadow -Wdouble-promotion -Wsign-conversion \
     -Wimplicit-fallthrough -Wcast-align -Wformat=2 -Wpointer-arith \
     -Werror=return-type -Werror=null-dereference -Werror=undef \
@@ -87,14 +89,16 @@ endif
 
 # ------------------------------ Sources ------------------------------
 
-C_SRCS   := $(shell find $(SRC_DIR) -name '*.c')
-CXX_SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
+C_SRCS    := $(shell find $(SRC_DIR) -name '*.c')
+CXX_SRCS  := $(shell find $(SRC_DIR) -name '*.cpp')
+MTAR_SRCS := $(shell find $(MTAR_DIR) -name '*.c')
 
 SRCS := $(C_SRCS) $(CXX_SRCS)
 
 OBJS := $(patsubst $(SRC_DIR)/%, $(BUILD_DIR)/%, $(SRCS))
 OBJS := $(OBJS:.c=.o)
 OBJS := $(OBJS:.cpp=.o)
+OBJS += $(patsubst $(EXT_DIR)/%, $(BUILD_DIR)/%, $(MTAR_SRCS:.c=.o))
 
 DEPS := $(OBJS:.o=.d)
 
@@ -122,6 +126,11 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Disabling all warnings b/c it's external
+$(BUILD_DIR)/mtar/%.o: $(EXT_DIR)/mtar/%.c
+	@mkdir -p $(dir $@)
+	$(CC) -w -c $< -o $@
 
 -include $(DEPS)
 

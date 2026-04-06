@@ -2,6 +2,9 @@
 #
 # Ensure you have CMake installed, modern OpenALSoft
 # compiling requires it.
+#
+# If you want to build Platinum as a shared library, edit the
+# "-DLIBTYPE" flag in the cmake build step for OpenAL-Soft
 
 EXTERNAL=external
 mkdir -p "$EXTERNAL"
@@ -14,10 +17,18 @@ curl -sL "https://raw.githubusercontent.com/nothings/stb/master/stb_truetype.h" 
 curl -sL "https://raw.githubusercontent.com/nothings/stb/master/stb_perlin.h" \
     -o "$EXTERNAL/stb_perlin.h"
 
-# RXI sj.json
-echo "Fetching rxi headers..."
-curl -sL "https://raw.githubusercontent.com/rxi/sj.h/master/sj.h" \
-    -o "$EXTERNAL/sj.h"
+# rxi microtar code
+if [ ! -d "$EXTERNAL/mtar" ]; then
+    mkdir -p "$EXTERNAL/mtar"
+    echo "Fetching microtar..."
+    curl -sL "https://raw.githubusercontent.com/rxi/microtar/master/src/microtar.c" \
+        -o "$EXTERNAL/mtar/microtar.c"
+    curl -sL "https://raw.githubusercontent.com/rxi/microtar/master/src/microtar.h" \
+        -o "$EXTERNAL/mtar/microtar.h"
+else
+    echo "microtar fetched, skipping..."
+fi
+
 
 # OpenAL requires CMake
 if [ ! -d "$EXTERNAL/openal-soft" ]; then
