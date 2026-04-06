@@ -78,9 +78,11 @@ else
 endif
 
 ifeq ($(UNAME_S),Darwin)
-	SYSTEM_LIBS := -framework OpenGL -lm
+	SYSTEM_LIBS := -L$(EXT_DIR)/openal-soft/build -framework OpenGL \
+	-framework AudioToolbox -framework CoreAudio -framework CoreFoundation \
+	-lopenal -lm
 else
-	SYSTEM_LIBS := -lGL -lGLU -lopenal -lm
+	SYSTEM_LIBS := -L$(EXT_DIR)/openal-soft/build -lGL -lGLU -lopenal -lm
 endif
 
 # ------------------------------ Sources ------------------------------
