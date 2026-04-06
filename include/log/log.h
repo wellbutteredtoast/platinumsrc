@@ -55,8 +55,19 @@ static inline const char *base(const char *p) {
     return s;
 }
 
-static inline void wr(
-    log_t cat, const char *file, const char *fun, const char *fmt, ...
+#ifdef _MSC_VER
+#  define _LOG_FMT_ATTR
+#  define _LOG_FMT_PARAM _Printf_format_string_
+#elif defined(__GNUC__)
+#  define _LOG_FMT_ATTR __attribute__((format(printf, 4, 5)))
+#  define _LOG_FMT_PARAM
+#else
+#  define _LOG_FMT_ATTR
+#  define _LOG_FMT_PARAM
+#endif
+
+static inline _LOG_FMT_ATTR void wr(
+    log_t cat, const char *file, const char *fun, _LOG_FMT_PARAM const char *fmt, ...
 ) {
     if (cat < LOG_LEVEL) return;
 
