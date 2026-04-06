@@ -54,8 +54,8 @@ ini parse_ini_file(const char *path, int *err);
 /**
  * @brief Get the ini section object
  * 
- * @param ini_file 
- * @param sect_name 
+ * @param ini_file Pointer to existing ini object
+ * @param sect_name Name of the section 
  * @return ini_sect 
  */
 ini_sect get_ini_section(const ini *ini_file, const char *sect_name);

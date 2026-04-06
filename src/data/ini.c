@@ -83,3 +83,41 @@ ini parse_ini_file(const char *path, int *err) {
     if (err) *err = 0;
     return result;
 }
+
+ini_sect get_ini_section(const ini *ini_file, const char *sect_name) {
+    ini_sect section_result = {0};
+
+    // nullifying the file or sections is quite bad
+    if (ini_file == NULL || sect_name == NULL) {
+        LOG(LOG_ERROR, "one or more arguments of get_ini_section is null!");
+        return section_result;
+    }
+
+    for (int i = 0; i < ini_file->sect_count; i++) {
+        if (strncmp(ini_file->sections[i].name, sect_name, INI_MAX_NAME_LEN) == 0) {
+            return ini_file->sections[i];
+        }
+    }
+
+    LOG(LOG_WARN, "section \"%s\" not found in ini", sect_name);
+    return section_result;
+}
+
+ini_pair get_ini_pair(const ini_sect *section, const char *key) {
+    ini_pair pair_result = {0};
+
+    // A null section or null key is not something we can handle
+    if (section == NULL || key == NULL) {
+        LOG(LOG_ERROR, "one or more arguments of get_ini_pair is null!");
+        return pair_result;
+    }
+
+    for (int i = 0; i < section->pair_count; i++) {
+        if (strncmp(section->pairs[i].key, key, INI_MAX_KEY_LEN) == 0) {
+            return section->pairs[i];
+        }
+    }
+
+    LOG(LOG_WARN, "key \"%s\" not found in section \"%s\"", key, section->name);
+    return pair_result;
+}

@@ -49,6 +49,7 @@ external/
 # editors & per-user files
 .vscode/
 .idea/
+.cache/
 *.swp
 *.swo
 *~
