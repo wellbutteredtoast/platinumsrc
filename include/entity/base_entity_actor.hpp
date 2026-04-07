@@ -8,7 +8,7 @@ class base_entity_actor : public base_entity {
         
         virtual void b_take_damage(float amount, base_entity* inflictor);
     
-        bool b_is_alive() const { return health > 0.0f; }
+        bool b_is_alive() const { return health >= 0.0f; }
     
         virtual ~base_entity_actor();
     

@@ -1,5 +1,5 @@
 //
-// entity/base_entity.hpp -> Basic entity object to extend on
+// entity/base_entity.hpp -> abstract base class to extend on
 //
 // Entities are weird and doing everything customized and heavy
 // will probably not work in the long term, given how little RAM
@@ -21,6 +21,8 @@ class base_entity {
         
         virtual void b_destroy();
 
+        virtual const char* b_classname() const = 0;
+
         lm_mat4 b_get_model_matrix() const;
 
         virtual ~base_entity();
@@ -28,7 +30,6 @@ class base_entity {
         lm_vec3 position;
         lm_vec3 rotation;
         lm_vec3 scale;
-        const char* classname;
     
     protected:
         base_entity();
